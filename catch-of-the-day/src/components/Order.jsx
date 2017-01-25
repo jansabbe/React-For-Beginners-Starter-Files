@@ -1,5 +1,6 @@
 import React from 'react';
 import {formatPrice} from '../helpers';
+import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 export default class Order extends React.Component {
     render() {
@@ -13,13 +14,18 @@ export default class Order extends React.Component {
         return (
             <div className="order-wrap">
                 <h2>Your order</h2>
-                <ul className="order">
+                <CSSTransitionGroup 
+                    className="order" 
+                    component="ul"
+                    transitionName="order"
+                    transitionEnterTimeout={500}
+                    transitionLeaveTimeout={500}>
                     {orderIds.map(i => this.renderOrderItem(i))}            
                     <li className="total">
                         <strong>Total:</strong>
                         {formatPrice(total)}
                     </li>
-                </ul>
+                </CSSTransitionGroup>
             </div>
         )
     }
@@ -33,10 +39,27 @@ export default class Order extends React.Component {
             return <li key={key}>Sorry, {fish ? fish.name : 'fish'} is no longer available {remove}</li>
         }
         return <li key={key}>
-            <span>{count} pieces {fish.name}</span>
+            <span>
+                <CSSTransitionGroup
+                    component="span"
+                    className="count"
+                    transitionName="count"
+                    transitionEnterTimeout={250}
+                    transitionLeaveTimeout={250}
+                >   
+                    <span key={count}>{count}</span>
+                </CSSTransitionGroup>
+                pieces {fish.name}
+            </span>
             {remove}             
             <span className="price">{formatPrice(count * fish.price)}</span>
         </li>
+    }
+
+    static propTypes = {
+        order: React.PropTypes.object.isRequired,
+        fishes: React.PropTypes.object.isRequired,
+        removeFromOrder: React.PropTypes.func.isRequired
     }
 
 }

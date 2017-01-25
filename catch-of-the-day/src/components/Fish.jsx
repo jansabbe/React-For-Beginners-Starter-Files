@@ -18,4 +18,8 @@ export default class Fish extends React.Component {
             </li>
         )
     }
+
+    static propTypes = {
+        addToOrder: React.PropTypes.func.isRequired
+    }
 }

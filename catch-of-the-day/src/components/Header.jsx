@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Header(props) {
+function Header(props) {
     return (
         <header className="top">
             <h1>Catch 
@@ -13,3 +13,9 @@ export default function Header(props) {
         </header>
     )
 }
+
+Header.propTypes = {
+    tagline: React.PropTypes.string.isRequired
+}
+
+export default Header
